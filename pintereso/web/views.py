@@ -17,3 +17,4 @@ class IndexView(TemplateView):
         if self.is_user_authenticated():
             context['is_auth'] = True
         return context
+
