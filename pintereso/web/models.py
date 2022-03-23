@@ -1,6 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 from pintereso.web.validators import only_letters_validator
 
 # Create your models here.
@@ -27,7 +30,9 @@ class Profile(models.Model):
         validators=(
             MinLengthValidator(FIRST_NAME_MIN_LENGTH),
             only_letters_validator,
-        )
+        ),
+        null=True,
+        blank=True,
     )
 
     last_name = models.CharField(
@@ -35,7 +40,9 @@ class Profile(models.Model):
         validators=(
             MinLengthValidator(LAST_NAME_MIN_LENGTH),
             only_letters_validator,
-        )
+        ),
+        null=True,
+        blank=True,
     )
 
     profile_pic = models.ImageField(
@@ -73,7 +80,7 @@ class Profile(models.Model):
         blank=True,
     )
 
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         UserModel,
         on_delete=models.CASCADE,
         primary_key=True,

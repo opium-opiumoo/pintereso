@@ -45,7 +45,7 @@
                {% else %}
                href="{% url 'login user' %}"
                {% endif %}
-            ><img class="rounded-circle mr-2" src="{% static 'img/av.png' %}" width="30"><span class="align-middle">{% if is_auth %}{{ request.user }}{% endif %}</span></a>
+            ><img class="rounded-circle mr-2" src="{% static 'img/av.png' %}" width="30"><span class="align-middle">{% if is_auth %}{{ request.user }}{% else %}Guest{% endif %}</span></a>
     		</li>
     		<li class="nav-item dropdown">
     		<a class="nav-link" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
