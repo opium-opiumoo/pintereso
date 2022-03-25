@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -57,6 +57,9 @@ class UserLoginView(LoginView):
             return redirect('index')
         return super().dispatch(request, *args, **kwargs)
 
+class UserLogoutView(LogoutView):
+    next_page = reverse_lazy('index')
+
 
 
 class UserProfileView(DetailView):
@@ -87,10 +90,21 @@ class EditUserProfileView(UpdateView):
     form_class = UpdateProfileForm
     success_url = reverse_lazy('index')
 
+    def is_user_authenticated(self):
+        if self.request.user.is_authenticated:
+            return True
+        return False
+
     def get_success_url(self):
         if self.success_url:
             return self.success_url
         return super().get_success_url()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.is_user_authenticated():
+            context['is_auth'] = True
+        return context
 
 class ChangeUserPasswordView:
     pass
