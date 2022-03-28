@@ -46,13 +46,22 @@ class UpdateProfileForm(UserChangeForm):
     )
 
     description = forms.CharField(
-        widget=forms.Textarea,
+        widget=forms.Textarea(
+            attrs={
+                'rows': 4,
+                    }
+        ),
     )
 
     gender = forms.ChoiceField(
         choices=Profile.GENDERS,
         required=False,
     )
+
+    def __init__(self, *args, **kwargs):
+        super(UpdateProfileForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control form-control-lg'
 
     def save(self, commit=True):
         user = super().save(commit=commit)

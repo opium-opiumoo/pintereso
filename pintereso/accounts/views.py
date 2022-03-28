@@ -67,6 +67,13 @@ class UserProfileView(DetailView):
     template_name = 'author.html'
     context_object_name = 'profile'
 
+    def is_user_owner(self):
+        user = self.request.user
+        current_user = self.request.path.split('/')[-1]
+        if int(user.pk) == int(current_user):
+            return True
+        return False
+
     def is_user_authenticated(self):
         if self.request.user.is_authenticated:
             return True
@@ -76,6 +83,8 @@ class UserProfileView(DetailView):
         context = super().get_context_data(**kwargs)
         photos = list(Photo.objects.filter(user_profile_id=self.object.id))
         total_photos_count = len(photos)
+        if self.is_user_owner():
+            context['is_owner'] = True
         if self.is_user_authenticated():
             context['is_auth'] = True
         context.update({
@@ -90,8 +99,10 @@ class EditUserProfileView(UpdateView):
     form_class = UpdateProfileForm
     success_url = reverse_lazy('index')
 
-    def is_user_authenticated(self):
-        if self.request.user.is_authenticated:
+    def is_user_owner(self):
+        user = self.request.user
+        current_user = self.request.path.split('/')[-1]
+        if int(user.pk) == int(current_user):
             return True
         return False
 
@@ -102,8 +113,10 @@ class EditUserProfileView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.is_user_authenticated():
-            context['is_auth'] = True
+        if self.is_user_owner():
+            context['is_owner'] = True
+        else:
+            return redirect('index')
         return context
 
 class ChangeUserPasswordView:

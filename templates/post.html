@@ -11,7 +11,12 @@
                     <div>
                         {{ photo.description }}
                     </div>
-    				<small class="d-block"><a class="btn btn-sm btn-gray200" href="#"><i class="fa fa-external-link"></i> Visit Website</a></small>
+                    {% if user_post %}
+                        <div class="d-flex mt-4">
+                            <a class="btn btn-secondary mr-3 profile-button text-white" href="{% url 'photo edit' photo.pk %}">Edit Photo</a>
+                            <a class="btn btn-primary bg-danger profile-button text-white" href="{% url 'photo delete' photo.pk %}">Delete Photo</a>
+                        </div>
+                    {% endif %}
     				<!-- Begin Comments -replace demowebsite with your own id
                     ================================================== -->
     				<div id="comments" class="mt-4">

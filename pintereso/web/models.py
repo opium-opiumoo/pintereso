@@ -3,6 +3,7 @@ from django.core.validators import MinLengthValidator
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from taggit.managers import TaggableManager
 
 from pintereso.web.validators import only_letters_validator
 
@@ -115,6 +116,8 @@ class Photo(models.Model):
     publication_date = models.DateTimeField(
         auto_now_add=True,
     )
+
+    tags = TaggableManager()
 
     user_profile = models.ForeignKey(
         UserModel,

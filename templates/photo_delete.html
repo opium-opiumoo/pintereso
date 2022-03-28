@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+{% block page_content %}
+    <div class='col-sm-6 col-sm-offset-3 mr-auto ml-auto d-flex flex-column align-items-center justify-content-center' style="min-height: 360px;">
+    {% if user_post %}
+        <h1 class="mt-5 mb-4">Are you sure you want to delete this photo?</h1>
+        <img class="mb-4" src="{{ photo.photo.url }}" alt="Photo Card">
+        <form class="mb-5" action="{% url 'photo delete' photo.pk %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-primary bg-danger mr-2 profile-button text-white" value="Delete" />
+            <input type="button" class="btn btn-primary bg-white profile-button text-dark"  value="Cancel" onclick="window.location='{% url 'photo details' photo.pk %}'"/>
+        </form>
+    {% else %}
+        <h4>You're not allowed to be here.</h4>
+        <a href="{% url 'index' %}">Home Page</a>
+    {% endif %}
+</div>
+{% endblock %}

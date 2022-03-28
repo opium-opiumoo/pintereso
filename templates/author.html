@@ -19,11 +19,11 @@
             <h1 class="font-weight-bold title">
                 {% if not profile.profile.first_name and not profile.profile.last_name %}{{ profile.email }}{% else %}
                     {{ profile.profile.first_name }} {{ profile.profile.last_name }}{% endif %}</h1>
-            {% if is_auth %}
+            {% if is_owner %}
                 <div class="text-right"><a class="btn btn-primary profile-button text-white" href="{% url 'update user' profile.pk %}">Edit Profile</a>
                 </div>
-                </div>
             {% endif %}
+                </div>
         <p>
             {{ profile.profile.description }}
         </p>
