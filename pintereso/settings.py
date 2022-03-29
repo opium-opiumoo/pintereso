@@ -87,10 +87,10 @@ WSGI_APPLICATION = 'pintereso.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pintereso_db',
-        'USER': 'postgres',
-        'PASSWORD': '1123QwER',
-        'HOST': '127.0.0.1',
+        'NAME': 'd720dkuachf9hq',
+        'USER': 'ojmykspkkzniyr',
+        'PASSWORD': '0068afd9603e5f18ceea6296f347aaff99d78152ada066c340faaf647df6d800',
+        'HOST': 'ec2-99-80-170-190.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
     }
 }
