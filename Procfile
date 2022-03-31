@@ -1,2 +1,2 @@
 web: gunicorn pintereso.wsgi
-release: release pintereso/manage.py migrate
+release: python manage.py migrate
