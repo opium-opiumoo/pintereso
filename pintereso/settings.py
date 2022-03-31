@@ -84,6 +84,8 @@ WSGI_APPLICATION = 'pintereso.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+SOME_SETTINGS = "SOME SETTING"
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
