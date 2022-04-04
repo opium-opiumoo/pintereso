@@ -1,3 +1,5 @@
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
@@ -22,7 +24,7 @@ class CreateProfileForm(UserCreationForm):
         model = UserModel
         fields = ('email', 'password1', 'password2', )
 
-class UpdateProfileForm(UserChangeForm):
+class UpdateProfileForm(forms.ModelForm):
     first_name = forms.CharField(
         max_length=Profile.FIRST_NAME_MAX_LENGTH,
         required=False,
@@ -59,12 +61,13 @@ class UpdateProfileForm(UserChangeForm):
     )
 
     def __init__(self, *args, **kwargs):
-        super(UpdateProfileForm, self).__init__(*args, **kwargs)
-        for visible in self.visible_fields():
-            visible.field.widget.attrs['class'] = 'form-control form-control-lg'
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Submit'))
 
     def save(self, commit=True):
-        user = super().save(commit=commit)
+        user = super().save(commit=commit).user
+
         profile = Profile(
         first_name=self.cleaned_data['first_name'],
         last_name=self.cleaned_data['last_name'],

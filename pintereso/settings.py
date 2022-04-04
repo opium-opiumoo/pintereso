@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'pintereso.web',
     'pintereso.accounts',
     'taggit',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -145,3 +146,5 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.PinteresoUser'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -1,6 +1,8 @@
+from crispy_forms.layout import Submit
 from django import forms
 from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
+from crispy_forms.helper import FormHelper
 from django.forms.models import (
     inlineformset_factory,
 )
@@ -13,6 +15,8 @@ class CreatePhotoForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.user = user
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Submit'))
 
     def save(self, commit=True):
         photo = super().save(commit=False)
@@ -48,6 +52,8 @@ class EditPhotoForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.user = user
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Submit'))
 
     def save(self, commit=True):
         photo = super().save(commit=False)

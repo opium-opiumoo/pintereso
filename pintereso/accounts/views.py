@@ -4,7 +4,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, DetailView, CreateView, UpdateView
 
 from pintereso.accounts.forms import CreateProfileForm, UpdateProfileForm
@@ -94,10 +94,9 @@ class UserProfileView(DetailView):
         return context
 
 class EditUserProfileView(UpdateView):
-    model = UserModel
+    model = Profile
     template_name = 'update-user.html'
     form_class = UpdateProfileForm
-    success_url = reverse_lazy('index')
 
     def is_user_owner(self):
         user = self.request.user
@@ -106,15 +105,21 @@ class EditUserProfileView(UpdateView):
             return True
         return False
 
-    def get_success_url(self):
-        if self.success_url:
-            return self.success_url
-        return super().get_success_url()
+    def is_user_authenticated(self):
+        if self.request.user.is_authenticated:
+            return True
+        return False
+
+    def get_success_url(self, **kwargs):
+        # obj = form.instance or self.object
+        return reverse("account", kwargs={'pk': self.request.user.pk})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.is_user_owner():
             context['is_owner'] = True
+        if self.is_user_authenticated():
+            context['is_auth'] = True
         else:
             return redirect('index')
         return context
