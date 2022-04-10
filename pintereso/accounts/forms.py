@@ -2,15 +2,13 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.forms import UserCreationForm
 
 from pintereso.web.models import Profile
 
 UserModel = get_user_model()
 
 class CreateProfileForm(UserCreationForm):
-
     def save(self, commit=True):
         user = super().save(commit=commit)
         profile = Profile(user=user)
