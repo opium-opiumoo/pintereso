@@ -1,3 +1,4 @@
+from cloudinary.models import CloudinaryField
 from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from django.db import models
@@ -44,23 +45,9 @@ class Profile(models.Model):
         blank=True,
     )
 
-    profile_pic = models.ImageField(
-        validators=(
-            # image_max_size_validator,
-        ),
-        upload_to='images',
-        blank=True,
-        null=True,
-    )
+    profile_pic = CloudinaryField('image')
 
-    profile_cover = models.ImageField(
-        validators=(
-            # image_max_size_validator,
-        ),
-        upload_to='images',
-        blank=True,
-        null=True,
-    )
+    profile_cover = CloudinaryField('image')
 
     date_of_birth = models.DateField(
         null=True,
@@ -99,12 +86,7 @@ class Photo(models.Model):
         )
     )
 
-    photo = models.ImageField(
-        validators=(
-            # image_max_size_validator,
-        ),
-        upload_to='images',
-    )
+    photo = CloudinaryField('image')
 
     description = models.TextField(
         null=True,

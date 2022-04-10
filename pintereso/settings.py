@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
+
+import cloudinary
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -194,3 +196,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.PinteresoUser'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+cloudinary.config(
+  cloud_name = config('CLOUDINARY_CLOUD_NAME', None),
+  api_key = config('CLOUDINARY_API_KEY', None),
+  api_secret =  config('CLOUDINARY_SECRET', None),
+)
