@@ -45,9 +45,9 @@ class Profile(models.Model):
         blank=True,
     )
 
-    profile_pic = CloudinaryField('image')
+    profile_pic = CloudinaryField('image', blank=True, null=True)
 
-    profile_cover = CloudinaryField('image')
+    profile_cover = CloudinaryField('image', blank=True, null=True)
 
     date_of_birth = models.DateField(
         null=True,

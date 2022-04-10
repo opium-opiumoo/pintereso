@@ -18,7 +18,7 @@
                             <div class="col-xl-6">
                                 <div class="card-body p-md-5 text-black">
                                     <h3 class="mb-5 text-uppercase">Update User Settings</h3>
-                                    <form method="post" action="{% url 'update user' user.pk %}">
+                                    <form method="post" action="{% url 'update user' user.pk %}" enctype="multipart/form-data">
                                         {% csrf_token %}
                                         {% crispy form %}
                                     </form>
