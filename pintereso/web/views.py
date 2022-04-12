@@ -25,18 +25,13 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        tag_frequency = defaultdict(int)
+        tag_arr = Photo.tags.most_common()[:3]
 
-        for item in Photo.objects.all():
-            for tag in item.tags.all():
-                tag_frequency[tag.name] += 1
-
-        context['tag_frequency'] = Counter(tag_frequency).most_common()
+        context['tag_arr'] = tag_arr
         photos = list(Photo.objects.all())
         if self.is_user_authenticated():
             context['is_auth'] = True
         context['photos'] = photos
-        print(tag_frequency)
         return context
 
 class CreatePhotoView(CreateView, LoginRequiredMixin):
@@ -167,12 +162,21 @@ class PhotoDeleteView(DeleteView):
 
 def tag_view(request, tag_slug=None):
     photos = Photo.objects.all()
+    tag_arr = Photo.tags.most_common()[:3]
+    context = {}
+    context['tag_arr'] = tag_arr
+    if request.user.is_authenticated:
+        context['is_auth'] = True
     tag = None
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
         photos = photos.filter(tags__in=[tag])
 
-    return render(request, '', {
-        'photos': photos,
-        'tag': tag,
-    })
+    context.update(
+        {
+            'photos': photos,
+            'tag': tag,
+        }
+    )
+
+    return render(request, 'sorted-page.html', context)

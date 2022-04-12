@@ -19,11 +19,13 @@ class CreatePhotoForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', 'Submit'))
 
     def save(self, commit=True):
+        form = CreatePhotoForm
         photo = super().save(commit=False)
 
         photo.user_profile_id = self.user.pk
         if commit:
             photo.save()
+            form._save_m2m(self)
 
         return photo
 
@@ -57,11 +59,13 @@ class EditPhotoForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', 'Submit'))
 
     def save(self, commit=True):
+        form = EditPhotoForm
         photo = super().save(commit=False)
 
         photo.user_profile_id = self.user.pk
         if commit:
             photo.save()
+            form._save_m2m(self)
 
         return photo
 
