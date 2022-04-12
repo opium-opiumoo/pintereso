@@ -12,9 +12,9 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarsExplore">
                         <ul class="navbar-nav">
-                            {% for mt in common_tags %}
+                            {% for tag in tag_frequency %}
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">{{ mt }}</a>
+                                    <a class="nav-link" href="#">{{ tag }}</a>
                                 </li>
                             {% endfor %}
 

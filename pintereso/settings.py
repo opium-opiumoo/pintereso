@@ -162,6 +162,8 @@ AUTH_USER_MODEL = 'accounts.PinteresoUser'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+TAGGIT_CASE_INSENSITIVE = True
+
 cloudinary.config(
   cloud_name = config('CLOUDINARY_CLOUD_NAME', None),
   api_key = config('CLOUDINARY_API_KEY', None),

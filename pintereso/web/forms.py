@@ -27,6 +27,7 @@ class CreatePhotoForm(forms.ModelForm):
 
         return photo
 
+
     class Meta:
         model = Photo
         fields = ('title', 'photo', 'description', 'tags', )

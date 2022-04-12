@@ -1,5 +1,8 @@
+from collections import defaultdict, Counter
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
@@ -22,6 +25,13 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        tag_frequency = defaultdict(int)
+
+        for item in Photo.objects.all():
+            for tag in item.tags.all():
+                tag_frequency[tag.name] += 1
+
+        context['tag_frequency'] = Counter(tag_frequency).most_common()
         photos = list(Photo.objects.all())
         if self.is_user_authenticated():
             context['is_auth'] = True
@@ -163,3 +173,15 @@ class PhotoDeleteView(DeleteView):
     def get_success_url(self, **kwargs):
         # obj = form.instance or self.object
         return reverse("account", kwargs={'pk': self.request.user.pk})
+
+def tag_view(request, tag_slug=None):
+    photos = Photo.objects.all()
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        photos = photos.filter(tags__in=[tag])
+
+    return render(request, '', {
+        'photos': photos,
+        'tag': tag,
+    })
