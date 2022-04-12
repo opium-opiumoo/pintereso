@@ -36,6 +36,7 @@ class IndexView(TemplateView):
         if self.is_user_authenticated():
             context['is_auth'] = True
         context['photos'] = photos
+        print(tag_frequency)
         return context
 
 class CreatePhotoView(CreateView, LoginRequiredMixin):
