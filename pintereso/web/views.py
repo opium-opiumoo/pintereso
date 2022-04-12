@@ -38,16 +38,6 @@ class IndexView(TemplateView):
         context['photos'] = photos
         return context
 
-def tagged(request, slug):
-    tag = get_object_or_404(Tag, slug=slug)
-    # Filter posts by tag name
-    photos = Photo.objects.filter(tags=tag)
-    context = {
-        'tag':tag,
-        'photos':photos,
-    }
-    return render(request, 'index.html', context)
-
 class CreatePhotoView(CreateView, LoginRequiredMixin):
     model = Photo
     form_class = CreatePhotoForm

@@ -14,19 +14,10 @@
                         <ul class="navbar-nav">
                             {% for tag in tag_frequency %}
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">{{ tag }}</a>
+                                    <a class="nav-link" href="{% url 'photo:photo_by_tag' tag.slug %}">{{ tag.name }}</a>
                                 </li>
                             {% endfor %}
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Food</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Travel</a>
-                            </li>
+                            {% comment %}
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>
@@ -39,6 +30,7 @@
                                     <a class="dropdown-item" href="#">Dieting</a>
                                 </div>
                             </li>
+                            {% endcomment %}
                         </ul>
                     </div>
                 </nav>
