@@ -3,9 +3,6 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from crispy_forms.helper import FormHelper
-from django.forms.models import (
-    inlineformset_factory,
-)
 
 from pintereso.web.models import Photo
 
